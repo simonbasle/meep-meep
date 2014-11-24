@@ -1,6 +1,4 @@
 ﻿using System;
-using Enyim.Caching.Memcached;
-using Enyim.Caching.Memcached.Results;
 using FakeItEasy;
 using FluentAssertions;
 using MeepMeep.Docs;
