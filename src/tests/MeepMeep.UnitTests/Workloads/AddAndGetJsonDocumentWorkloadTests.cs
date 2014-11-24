@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Enyim.Caching.Memcached;
-using Enyim.Caching.Memcached.Results;
 using FakeItEasy;
 using FluentAssertions;
 using MeepMeep.Docs;
 using MeepMeep.Workloads;
 using NUnit.Framework;
+using Couchbase;
 
 namespace MeepMeep.UnitTests.Workloads
 {
@@ -20,15 +19,15 @@ namespace MeepMeep.UnitTests.Workloads
 
             SUT.Execute(FakeClient, 0);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
              .MustHaveHappened(Repeated.Exactly.Times(10));
 
             var keys = GenerateKeys(10).ToArray();
             foreach (var key in keys)
-                A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, key, SampleDocuments.Default))
+                A.CallTo(() => FakeClient.Insert(key, SampleDocuments.Default))
                  .MustHaveHappened(Repeated.Exactly.Once);
 
-            A.CallTo(() => FakeClient.ExecuteGet(A<string>.That.Matches(k => keys.Contains(k))))
+            A.CallTo(() => FakeClient.Get<string>(A<string>.That.Matches(k => keys.Contains(k))))
              .MustHaveHappened(Repeated.Exactly.Times(10));
         }
 
@@ -37,8 +36,8 @@ namespace MeepMeep.UnitTests.Workloads
         {
             SUT = CreateWorkload(10);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
-             .Returns(new StoreOperationResult());
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
+             .Returns(new OperationResult<string>());
 
             var workloadResult = SUT.Execute(FakeClient, 0);
 
@@ -50,7 +49,7 @@ namespace MeepMeep.UnitTests.Workloads
         {
             SUT = CreateWorkload(10);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
              .Throws(new Exception("Foo bar"));
 
             var workloadResult = SUT.Execute(FakeClient, 0);

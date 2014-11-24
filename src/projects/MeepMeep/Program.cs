@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Couchbase;
 using MeepMeep.Docs;
 using MeepMeep.Extensions;
 using MeepMeep.Input;
 using MeepMeep.Output;
 using MeepMeep.Workloads;
 using MeepMeep.Workloads.Runners;
+using Couchbase.Core;
 using Couchbase.Management;
+using Couchbase;
 
 namespace MeepMeep
 {
@@ -46,10 +47,11 @@ namespace MeepMeep
 
         private static void Run(MeepMeepOptions options)
         {
-            /* saakshi change */
-            var cluster = new CouchbaseCluster(options.ToClientConfig());
-            cluster.FlushBucket(options.Bucket);
-            /* change over */
+            ClusterHelper.Initialize();
+            Cluster cluster = ClusterHelper.Get();
+            IBucket bucket = cluster.OpenBucket(options.Bucket, options.BucketPassword);
+            IBucketManager bucketManager = bucket.CreateManager(options.Bucket, options.BucketPassword);
+            bucketManager.Flush();
 
             OutputWriter.Verbose = options.Verbose;
 
@@ -58,7 +60,7 @@ namespace MeepMeep
 
             OutputWriter.Write("Running workloads...");
 
-            using (var client = CreateClient(options))
+            using (var client = bucket)
             {
                 var runner = CreateRunner(options);
 
@@ -67,11 +69,6 @@ namespace MeepMeep
             }
 
             OutputWriter.Write("Completed");
-        }
-
-        private static ICouchbaseClient CreateClient(MeepMeepOptions options)
-        {
-            return new CouchbaseClient(options.ToClientConfig());
         }
 
         private static IWorkloadRunner CreateRunner(MeepMeepOptions options)

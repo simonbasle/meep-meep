@@ -6,6 +6,7 @@ using FluentAssertions;
 using MeepMeep.Docs;
 using MeepMeep.Workloads;
 using NUnit.Framework;
+using Couchbase;
 
 namespace MeepMeep.UnitTests.Workloads
 {
@@ -19,11 +20,11 @@ namespace MeepMeep.UnitTests.Workloads
 
             SUT.Execute(FakeClient, 0);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
              .MustHaveHappened(Repeated.Exactly.Times(10));
 
             foreach (var key in GenerateKeys(10))
-                A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, key, SampleDocuments.Default))
+                A.CallTo(() => FakeClient.Insert(key, SampleDocuments.Default))
                  .MustHaveHappened(Repeated.Exactly.Once);
         }
 
@@ -32,8 +33,8 @@ namespace MeepMeep.UnitTests.Workloads
         {
             SUT = CreateWorkload(numOfDocs: 10, warmupMs: 0);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
-             .Returns(new StoreOperationResult());
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
+             .Returns(new OperationResult<string>());
 
             var workloadResult = SUT.Execute(FakeClient, 0);
 
@@ -45,7 +46,7 @@ namespace MeepMeep.UnitTests.Workloads
         {
             SUT = CreateWorkload(numOfDocs: 10, warmupMs: 0);
 
-            A.CallTo(() => FakeClient.ExecuteStore(StoreMode.Add, A<string>.Ignored, A<string>.Ignored))
+            A.CallTo(() => FakeClient.Insert(A<string>.Ignored, A<string>.Ignored))
              .Throws(new Exception("Foo bar"));
 
             var workloadResult = SUT.Execute(FakeClient, 0);

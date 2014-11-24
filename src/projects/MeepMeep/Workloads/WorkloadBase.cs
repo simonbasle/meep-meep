@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
-using Couchbase;
 using EnsureThat;
 using MeepMeep.Docs;
+using Couchbase.Core;
 
 namespace MeepMeep.Workloads
 {
@@ -29,7 +29,7 @@ namespace MeepMeep.Workloads
             WarmupMs = warmupMs;
         }
 
-        public virtual WorkloadResult Execute(ICouchbaseClient client, int workloadIndex)
+        public virtual WorkloadResult Execute(IBucket client, int workloadIndex)
         {
             Ensure.That(client, "client").IsNotNull();
 
@@ -93,13 +93,13 @@ namespace MeepMeep.Workloads
         /// <summary>
         /// Not included in timing. Could be used to perform setup logic.
         /// </summary>
-        protected virtual void OnPreExecute(ICouchbaseClient client) { }
+        protected virtual void OnPreExecute(IBucket client) { }
 
         /// <summary>
         /// Not included in timing. Could be used to perform cleanup logic.
         /// </summary>
-        protected virtual void OnPostExecute(ICouchbaseClient client) { }
+        protected virtual void OnPostExecute(IBucket client) { }
 
-        protected abstract WorkloadOperationResult OnExecuteStep(ICouchbaseClient client, int workloadIndex, int opIndex, Stopwatch sw);
+        protected abstract WorkloadOperationResult OnExecuteStep(IBucket client, int workloadIndex, int opIndex, Stopwatch sw);
     }
 }

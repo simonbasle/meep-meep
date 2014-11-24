@@ -1,5 +1,5 @@
 ﻿using System;
-using Couchbase;
+using Couchbase.Core;
 
 namespace MeepMeep
 {
@@ -18,6 +18,6 @@ namespace MeepMeep
         /// <param name="workload"></param>
         /// <param name="client"></param>
         /// <param name="onWorkloadCompleted"></param>
-        void Run(IWorkload workload, ICouchbaseClient client, Action<WorkloadResult> onWorkloadCompleted);
+        void Run(IWorkload workload, IBucket client, Action<WorkloadResult> onWorkloadCompleted);
     }
 }

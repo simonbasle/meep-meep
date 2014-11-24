@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Couchbase;
 using EnsureThat;
+using Couchbase.Core;
 
 namespace MeepMeep.Workloads.Runners
 {
@@ -24,7 +24,7 @@ namespace MeepMeep.Workloads.Runners
             TaskScheduler = CreateTaskScheduler(options.MaximumConcurrencyLevel);
         }
 
-        public virtual void Run(IWorkload workload, ICouchbaseClient client, Action<WorkloadResult> onWorkloadCompleted)
+        public virtual void Run(IWorkload workload, IBucket client, Action<WorkloadResult> onWorkloadCompleted)
         {
             Ensure.That(workload, "workload").IsNotNull();
             Ensure.That(onWorkloadCompleted, "onWorkloadCompleted").IsNotNull();
@@ -41,7 +41,7 @@ namespace MeepMeep.Workloads.Runners
             }
         }
 
-        protected virtual Task[] StartWorkloadTasks(IWorkload workload, ICouchbaseClient client, Action<WorkloadResult> onWorkloadCompleted)
+        protected virtual Task[] StartWorkloadTasks(IWorkload workload, IBucket client, Action<WorkloadResult> onWorkloadCompleted)
         {
             var tasks = new Task[NumOfClients];
 
