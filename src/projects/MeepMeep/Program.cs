@@ -47,7 +47,7 @@ namespace MeepMeep
 
         private static void Run(MeepMeepOptions options)
         {
-            ClusterHelper.Initialize();
+            ClusterHelper.Initialize(options.ToClientConfig());
             Cluster cluster = ClusterHelper.Get();
             IBucket bucket = cluster.OpenBucket(options.Bucket, options.BucketPassword);
             IBucketManager bucketManager = bucket.CreateManager(options.Bucket, options.BucketPassword);

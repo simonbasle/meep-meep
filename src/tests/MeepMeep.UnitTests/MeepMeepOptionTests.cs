@@ -5,6 +5,7 @@ using ApprovalTests.Reporters;
 using FluentAssertions;
 using MeepMeep.Testing;
 using NUnit.Framework;
+using MeepMeep.Extensions;
 
 namespace MeepMeep.UnitTests
 {
@@ -44,6 +45,14 @@ namespace MeepMeep.UnitTests
         public void When_evaluating_options_as_string_It_should_output_key_values_of_the_options()
         {
             Approvals.Verify(SUT);
+        }
+
+        [Test]
+        public void Can_map_to_couchbase_config()
+        {
+            var clientConfig = SUT.ToClientConfig();
+            clientConfig.Servers.Should().BeEquivalentTo(SUT.Nodes.Select(n => new Uri(n)));
+            clientConfig.BucketConfigs[SUT.Bucket].Servers.Should().BeEquivalentTo(SUT.Nodes.Select(n => new Uri(n)));
         }
     }
 }
