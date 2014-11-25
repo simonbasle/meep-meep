@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeepMeep.Testing", "tests\M
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5D96673E-3EE8-415A-B4A3-0BF6A647DA85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couchbase", "..\..\..\src\Couchbase\Couchbase.csproj", "{708A2350-A26C-444D-B975-8164263951A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couchbase", "..\..\couchbase-net-client\Src\Couchbase\Couchbase.csproj", "{708A2350-A26C-444D-B975-8164263951A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
