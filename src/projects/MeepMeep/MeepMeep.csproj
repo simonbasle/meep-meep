@@ -95,10 +95,11 @@
     <Compile Include="Workloads\WorkloadBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\src\Couchbase\Couchbase.csproj">
+    <ProjectReference Include="..\..\..\..\couchbase-net-client\Src\Couchbase\Couchbase.csproj">
       <Project>{708a2350-a26c-444d-b975-8164263951a7}</Project>
       <Name>Couchbase</Name>
     </ProjectReference>
