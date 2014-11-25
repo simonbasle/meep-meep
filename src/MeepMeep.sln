@@ -18,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5D9667
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couchbase", "..\..\..\src\Couchbase\Couchbase.csproj", "{708A2350-A26C-444D-B975-8164263951A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enyim.Caching", "..\..\..\src\Enyim.Caching\Enyim.Caching.csproj", "{EB42E369-1ADF-4E08-8DB7-6FA792ABDCC7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

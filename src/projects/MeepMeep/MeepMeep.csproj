@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MeepMeep</RootNamespace>
     <AssemblyName>MeepMeep</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -101,10 +101,6 @@
     <ProjectReference Include="..\..\..\..\..\src\Couchbase\Couchbase.csproj">
       <Project>{708a2350-a26c-444d-b975-8164263951a7}</Project>
       <Name>Couchbase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\src\Enyim.Caching\Enyim.Caching.csproj">
-      <Project>{eb42e369-1adf-4e08-8db7-6fa792abdcc7}</Project>
-      <Name>Enyim.Caching</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
